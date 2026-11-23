@@ -1,0 +1,58 @@
+{
+  "manifest_version": 3,
+  "name": "Recherche-Helfer → XML-Quellen",
+  "version": "2.8.0",
+  "description": "Assisted-manuelles Werkzeug: liest NUR die aktuelle Seite (Web/PDF) aus und bereitet den Volltext als XML- oder Markdown-Quelle für den Prompt auf. Keine Automatisierung. Alt+Shift+R. Rechtsklick auf Markierung: als Quelle hinzufügen.",
+  "minimum_chrome_version": "116",
+  "permissions": [
+    "tabs",
+    "scripting",
+    "storage",
+    "unlimitedStorage",
+    "clipboardWrite",
+    "offscreen",
+    "contextMenus"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Recherche-Helfer (Alt+Shift+R = auslesen)",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png"
+    }
+  },
+  "commands": {
+    "copy-all": {
+      "suggested_key": { "default": "Alt+Shift+C", "mac": "Alt+Shift+C" },
+      "description": "Gesamte Sammlung in die Zwischenablage kopieren"
+    },
+    "undo-last": {
+      "suggested_key": { "default": "Alt+Shift+Z", "mac": "Alt+Shift+Z" },
+      "description": "Letzte Quelle aus dem Sammelergebnis entfernen"
+    },
+    "read-current": {
+      "suggested_key": {
+        "default": "Alt+Shift+R",
+        "mac": "Alt+Shift+R"
+      },
+      "description": "Aktuelle Seite auslesen und zum Sammelergebnis hinzufügen"
+    }
+  }
+}

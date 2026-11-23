@@ -1,0 +1,10 @@
+import * as pdfjsLib from '../research-tool/lib/pdf.min.mjs';
+import { extractPdfText } from '../research-tool/pdf-extract.js';
+import fs from 'node:fs'; import assert from 'node:assert/strict'; import { pathToFileURL } from 'node:url';
+pdfjsLib.GlobalWorkerOptions.workerSrc = pathToFileURL(new URL('../research-tool/lib/pdf.worker.min.mjs', import.meta.url).pathname).href;
+const data = new Uint8Array(fs.readFileSync(new URL('./t.pdf', import.meta.url)));
+const r = await extractPdfText(pdfjsLib, { data: data.slice() }, 30000, { pageMarkers: true });
+console.log(r);
+assert.ok(r.ok && r.pages === 2 && r.text.includes('[Seite 2]') && r.text.includes('Größe') && r.title === 'Mein Test-PDF' && r.author === 'Max Beispiel');
+const bad = await extractPdfText(pdfjsLib, { data: new Uint8Array([1,2,3]) });
+assert.equal(bad.ok, false); console.log('PDF OK'); process.exit(0);
